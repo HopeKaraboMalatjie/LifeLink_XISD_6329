@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- item_alert.xml -->
+<androidx.cardview.widget.CardView android:id="@+id/cardAlert"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:layout_margin="6dp"
+    app:cardCornerRadius="12dp" app:cardElevation="4dp">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical" android:padding="16dp">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginBottom="6dp">
+            <TextView android:id="@+id/tvBloodType"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:background="#DC143C" android:textColor="#FFFFFF"
+                android:paddingHorizontal="12dp" android:paddingVertical="4dp"
+                android:textStyle="bold" android:textSize="16sp"
+                android:layout_marginEnd="8dp" />
+            <TextView android:id="@+id/tvUrgency"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textStyle="bold" android:textSize="13sp" android:textColor="#dc3545" />
+        </LinearLayout>
+        <TextView android:id="@+id/tvHospital"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:textSize="15sp" android:textStyle="bold" android:textColor="#1A1A1A" />
+        <TextView android:id="@+id/tvUnits"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:textSize="13sp" android:textColor="#666" android:layout_marginTop="4dp" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

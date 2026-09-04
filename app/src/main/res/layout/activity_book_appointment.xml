@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- activity_book_appointment.xml -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical" android:padding="16dp">
+
+        <ProgressBar android:id="@+id/progressBar"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_gravity="center" android:visibility="gone" />
+
+        <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content"
+            app:cardCornerRadius="12dp" app:cardElevation="4dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="vertical" android:padding="20dp">
+
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Appointment Details"
+                    android:textSize="18sp" android:textStyle="bold" android:textColor="@color/primary"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- Hospital -->
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Select Hospital *" android:textSize="13sp"
+                    android:textColor="@color/text_secondary" android:layout_marginBottom="4dp" />
+                <Spinner android:id="@+id/spinnerHospital"
+                    android:layout_width="match_parent" android:layout_height="48dp"
+                    android:layout_marginBottom="14dp" />
+
+                <!-- Date -->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/LifeLinkInput"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:hint="Select Date *" android:layout_marginBottom="12dp">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etDate"
+                        android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:focusable="false" android:clickable="true"
+                        android:inputType="none" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Time -->
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Select Time Slot *" android:textSize="13sp"
+                    android:textColor="@color/text_secondary" android:layout_marginBottom="4dp" />
+                <Spinner android:id="@+id/spinnerTime"
+                    android:layout_width="match_parent" android:layout_height="48dp"
+                    android:layout_marginBottom="14dp" />
+
+                <!-- Donation Type -->
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Donation Type *" android:textSize="13sp"
+                    android:textColor="@color/text_secondary" android:layout_marginBottom="4dp" />
+                <Spinner android:id="@+id/spinnerType"
+                    android:layout_width="match_parent" android:layout_height="48dp"
+                    android:layout_marginBottom="14dp" />
+
+                <!-- Notes -->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/LifeLinkInput"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:hint="Notes (optional)" android:layout_marginBottom="20dp">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etNotes"
+                        android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:inputType="textMultiLine" android:minLines="2" android:gravity="top" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnBook"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:text="🩸 Confirm Booking"
+                    android:textSize="16sp" style="@style/LifeLinkButton" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+</ScrollView>
