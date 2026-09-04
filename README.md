@@ -1,105 +1,65 @@
-# LifeLink Blood Donation — Complete Setup Guide
-## Task 2: Requirement Analysis & System Design
+# LifeLink — Blood Donation Management System
 
-**Team:** Ayabonga Hadebe · Gutshwa Magagula · Karabo Mojapelo · Hope Malatjie
+**Module:** XISD6329 · **Team:** Ayabonga Hadebe (ST10455760) · Gutshwa Magagula (ST10361206) · Karabo Mojapelo (ST10436116) · Hope Malatjie (ST10444867)
 
----
-
-## 📁 Project Structure
+LifeLink is a dual-platform blood donation management system connecting registered
+donors with hospitals and donation centres. This single repository holds both
+halves of the project, sharing one REST API and one MySQL database:
 
 ```
-lifelink-web/          ← PHP/XAMPP Web Application
-├── index.php          ← Landing page
-├── includes/          ← db.php, header.php, footer.php
-├── pages/             ← register, login, dashboard, appointments,
-│                         book_appointment, hospitals, history,
-│                         notifications, profile, logout
-├── admin/             ← login, dashboard, donors, hospitals,
-│                         appointments, inventory, alerts, reports, logout
-├── api/               ← REST API (auth, donor, appointments,
-│                         hospitals, alerts, notifications)
-├── assets/            ← css/style.css, js/app.js
-└── database/
-    └── lifelink.sql   ← Full schema + seed data
-
-lifelink-kotlin/       ← Android / Kotlin Mobile App
-├── app/build.gradle   ← Retrofit, Material, Coroutines
-└── src/main/
-    ├── AndroidManifest.xml
-    ├── java/com/lifelink/app/
-    │   ├── activities/   ← Splash, Login, Register, Main, BookAppointment
-    │   ├── fragments/    ← Dashboard, Appointments, Hospitals, Alerts, Profile
-    │   ├── adapters/     ← AppointmentAdapter, HospitalAdapter, AlertAdapter
-    │   ├── models/       ← Kotlin data classes
-    │   ├── network/      ← RetrofitClient, LifeLinkApiService
-    │   └── utils/        ← SessionManager, Extensions
-    └── res/              ← layouts, menu, values, drawables
-
-presentations/
-├── LifeLink_WebApp_PHP_XAMPP.pptx
-└── LifeLink_AndroidApp_Kotlin.pptx
+this-repo/
+├── app/, gradle/, build.gradle...   ← Android app (Kotlin)
+│   See app/ for the Android Studio project. Talks to lifelink-web/api/.
+│
+└── lifelink-web/                    ← Website (PHP/MySQL)
+    ├── index.php                    Landing page
+    ├── pages/                       Donor portal (login, register, dashboard,
+    │                                appointments, hospitals, profile)
+    ├── admin/                       Admin portal (dashboard, donors, hospitals,
+    │                                appointments, alerts)
+    ├── api/                         REST API consumed by the Android app
+    ├── database/lifelink.sql        Full schema + demo data — import this first
+    ├── config/db.php                Database connection settings
+    ├── assets/                      Shared CSS/JS
+    └── docs/RUNNING_THE_PROJECT.md  Full step-by-step setup guide
 ```
 
----
+## How the two halves connect
 
-## 🌐 WEB APP SETUP (PHP / XAMPP)
+Both platforms read and write the **same** `lifelink_db` MySQL database:
 
-### Step 1 — Copy Files
-Copy `lifelink-web/` → `C:\xampp\htdocs\lifelink\`
-
-### Step 2 — Create Database
-1. Start XAMPP → Apache + MySQL
-2. Open `http://localhost/phpmyadmin`
-3. Create database: `lifelink_db`
-4. Import: `lifelink-web/database/lifelink.sql`
-
-### Step 3 — Open the App
 ```
-http://localhost/lifelink
+Android App  ──HTTP/JSON──▶  lifelink-web/api/*.php  ──▶  MySQL: lifelink_db
+                                                                ▲
+Website (browser) ────────────────────────────────────────────┘
+  lifelink-web/pages/*.php, lifelink-web/admin/*.php
 ```
 
-### Default Credentials
-| Role           | Email                  | Password |
-|----------------|------------------------|----------|
-| LifeLink Admin | admin@lifelink.co.za   | password |
-| Donor          | Register on the site   | —        |
+Book an appointment in the app and it appears on the website's admin panel
+immediately, and vice versa — they're two front ends on one shared backend.
+
+## Getting it running
+
+See **`lifelink-web/docs/RUNNING_THE_PROJECT.md`** for the full step-by-step guide
+(XAMPP install, importing the database, running the website, pointing the Android
+app at it, demo logins, and troubleshooting).
+
+Quick reference — demo accounts (seeded in `lifelink-web/database/lifelink.sql`):
+- **Donor:** `donor@lifelink.co.za` / `Donor@123`
+- **Admin:** `admin@lifelink.co.za` / `Admin@123`
+
+## Project status
+
+- **Task 1:** Updated project plan, site maps, wireframes — submitted as a separate
+  Word/PDF document alongside this repository.
+- **Task 2 (in progress):** Both the website and Android app are working prototypes
+  wired to the same database, tested end-to-end.
+
+## Team workflow
+
+- Task board: Azure DevOps Kanban board (see the Task 1 project plan document)
+- Branching: feature branches off `main`, merged via pull request
+- Commit and push regularly as work progresses
 
 ---
-
-## 📱 ANDROID APP SETUP (Kotlin)
-
-### Step 1 — Open Project
-Open `lifelink-kotlin/` in Android Studio (Hedgehog+)
-Wait for Gradle sync to complete.
-
-### Step 2 — Configure API URL
-In `app/build.gradle`:
-```gradle
-// Emulator (default):
-buildConfigField "String", "BASE_URL", '"http://10.0.2.2/lifelink/api/"'
-
-// Real device on same WiFi:
-// buildConfigField "String", "BASE_URL", '"http://192.168.1.X/lifelink/api/"'
-```
-
-### Step 3 — Run
-Click ▶ in Android Studio. App launches on emulator (API 24+) or device.
-
----
-
-## 🔌 API Endpoints
-
-| Endpoint             | Action           | Description          |
-|----------------------|------------------|----------------------|
-| api/auth.php         | login/register   | Donor authentication |
-| api/donor.php        | profile/history  | Donor data           |
-| api/appointments.php | list/book/cancel | Appointments         |
-| api/hospitals.php    | list             | Approved hospitals   |
-| api/alerts.php       | active           | Emergency alerts     |
-| api/notifications.php| list/mark_read   | Notifications        |
-
-All responses: `{ "success": bool, "data": [...], "message": "..." }`
-
----
-
-*LifeLink Blood Donation · XISD 6329  · Task 2*
+*LifeLink Blood Donation · XISD6329*
